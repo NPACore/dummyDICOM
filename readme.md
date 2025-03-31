@@ -27,3 +27,14 @@ maybe contributing to deid failing?
 
 WARNING dicom: not recognized to be in valid format, skipping.
 ```
+
+## Notes
+
+quick image from dicom
+```
+uv tool install git+https://github.com/WillForan/med2image
+
+med2image  --convertOnlySingleDICOM -s m \
+   -o scrubbed/fake_phi.jpg \
+   -i scrubbed/fake_phi.dcm
+```

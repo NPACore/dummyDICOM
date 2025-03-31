@@ -6,5 +6,5 @@ input=${1:-fake_phi.dcm} # default to output of fake.py
 mkdir -p scrubbed/
 uv run \
     deid --debug --overwrite --format dicom  --outfolder scrubbed/ \
-      identifiers -a all --deid ./deid.yaml \
+      identifiers -a all --deid deid-py.cfg \
       --input  "$input"
