@@ -21,9 +21,8 @@ def read_example() -> FileDataset:
 def make_gray(dcm) -> FileDataset:
     """Change all values to middle color: gray.
     Ideally this will make cropping/pixel censoring very obvious"""
-    gray = 256 // 2 * np.ones(dcm.pixel_array.shape)
-    frame = encaps.encapsulate([gray.tobytes()])
-    dcm.PixelData = frame
+    gray = 256 // 2 * np.ones(dcm.pixel_array.shape, dtype=dcm.pixel_array.dtype)
+    dcm.set_pixel_data(gray, dcm.PhotometricInterpretation, dcm.BitsStored)
     return dcm
 
 
