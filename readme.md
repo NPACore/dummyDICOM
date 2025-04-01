@@ -38,3 +38,8 @@ med2image  --convertOnlySingleDICOM -s m \
    -o scrubbed/fake_phi.jpg \
    -i scrubbed/fake_phi.dcm
 ```
+
+## 
+```
+git clone https://gitlab.com/flywheel-io/scientific-solutions/gears/deid-export
+```

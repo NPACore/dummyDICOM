@@ -1,0 +1,6 @@
+__pycache__/
+deid-export/
+nii/
+scrubbed/
+*dcm
+*nii.gz
