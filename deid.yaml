@@ -15,13 +15,13 @@ version: 0.1.20250411.1
 #   https://flywheel-io.gitlab.io/public/migration-toolkit/pages/pixels.html
 #
 # uploaded like
-#  fw upload deid.yaml  "fw://mrrc/playground/"
+#  fw upload deid.yaml  "fw://flywheel/bids/"
+# see Makefile
 
 dicom:
   alter_pixels:
     detect:
       - dicom
-      - burned_in
 
     pixels:
       # Force Scrub Top Left
@@ -45,13 +45,10 @@ dicom:
     - name: BurnedInAnnotation
       replace-with: NO
     - name: ImageType
-      replace-with: "DERIVED\\SECONDARY"
+      replace-with: DERIVED\SECONDARY
 
-filename:
-  file-filter:
-    - '*'
   filenames:
-    - input-regex: '(?P<name>.*)'
+    - input-regex: (?P<name>.*)
       output: '{name}'
 flywheel:
   project:

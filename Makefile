@@ -1,6 +1,14 @@
 .PHONY: all
 
-all: nii/fake_phi.nii.gz nii/cleaned-gray.nii.gz scrubbed/cleaned-gray.jpg scrubbed/fake_phi.jpg 
+all: nii/fake_phi.nii.gz nii/cleaned-gray.nii.gz scrubbed/cleaned-gray.jpg scrubbed/fake_phi.jpg
+
+.flywheel-upload: deid.yaml
+	fw upload deid.yaml  "fw://flywheel/test/"
+	date > $@
+
+.launched: .flywheel-upload
+	# from copy-gear, launch job on flywheel
+	uv run ./deid-export_launchtest.py
 
 fake_phi.dcm: fake.py
 	uv run fake.py
