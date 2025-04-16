@@ -1,3 +1,8 @@
+name: force_scrub
+version: 0.1.20250411.1
+
+# 20250411 - add "burned_in" for deid 1.8.0 update (PV@FW)
+#
 # init from
 #  https://gitlab.com/flywheel-io/scientific-solutions/gears/deid-export/-/blob/main/deid-yml-examples/blank-export.yml
 # for dicom field scrubbing also see
@@ -11,16 +16,37 @@
 #
 # uploaded like
 #  fw upload deid.yaml  "fw://mrrc/playground/"
+
 dicom:
-  filenames:
-    - input-regex: '(?P<name>.*)'
-      output: '{name}'
   alter_pixels:
     detect:
       - dicom
+      - burned_in
+
     pixels:
-      - remove: [0, 0, 180, 166]
-        when: contains Modality .*
+      # Force Scrub Top Left
+      - remove: [0, 0, 512, 160]
+        when: |
+          contains SOPInstanceUID .
+
+  fields:
+    - name: PatientID
+      remove: true
+    - name: PatientName
+      remove: true
+    - name: PatientBirthDate
+      remove: true
+    - name: PatientSex
+      remove: true
+    - name: StudyDate
+      remove: true
+    - name: StudyTime
+      remove: true
+    - name: BurnedInAnnotation
+      replace-with: NO
+    - name: ImageType
+      replace-with: "DERIVED\\SECONDARY"
+
 filename:
   file-filter:
     - '*'
@@ -28,14 +54,15 @@ filename:
     - input-regex: '(?P<name>.*)'
       output: '{name}'
 flywheel:
+  project:
+    all: true
+  subject:
+    all: true
+  session:
+    all: true
   acquisition:
     all: true
   file:
     all: true
-  project:
-    all: true
-  session:
-    all: true
-  subject:
-    all: true
+
 only-config-profiles: true
